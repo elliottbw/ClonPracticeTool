@@ -11,7 +11,7 @@ public class Note {
 	private final String soloMarker;
 
 	private final List<String> NOTE_DEPICTIONS = Arrays.asList("Green", "Red", "Yellow", "Blue", "Orange",
-															   "Forced", "Tap", "Open");
+								   "Forced", "Tap", "Open");
 
 	public Note(String chartEntry) {
 		if (validate(chartEntry)) {
