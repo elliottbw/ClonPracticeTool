@@ -44,8 +44,8 @@ public class Chart {
 
 		List<String> sectionNames = Finder.getMatches(SECTION_NAMES_MATCH_PATTERN, contents);
 		List<Integer> sectionTimings = Finder.getMatches(SECTION_TIMINGS_MATCH_PATTERN, contents).stream()
-																						  .map(Integer::parseInt)
-																						  .collect(Collectors.toList());
+													 .map(Integer::parseInt)
+													 .collect(Collectors.toList());
 
 		if (sectionNames.size() != sectionTimings.size()) {
 			throw new InvalidChartException("Section timings and names do not match.");
