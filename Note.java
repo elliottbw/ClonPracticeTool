@@ -8,6 +8,7 @@ public class Note {
 	private final char type;
 	private final int fret;
 	private final int length;
+	private final String soloMarker;
 
 	private final List<String> NOTE_DEPICTIONS = Arrays.asList("Green", "Red", "Yellow", "Blue", "Orange",
 															   "Forced", "Tap", "Open");
@@ -19,8 +20,10 @@ public class Note {
 			throw new InvalidChartException(String.format("Incorrect note format %s", chartEntry));
 		}
 
-		final String TICK_PATTERN = "[0-9]+(?==[NS][0-7][0-9]+)";
-		final String TYPE_PATTERN = "(?<=[0-9]=)[NS](?=[0-7][0-9]+)";
+		chartEntry = chartEntry.replaceAll("\\s", "");
+
+		final String TICK_PATTERN = "[0-9]+((?==[NS][0-7][0-9]+)|(?==Esolo))";
+		final String TYPE_PATTERN = "(?<=[0-9]=)[NSE]((?=[0-7][0-9]+)|(?=solo))";
 		final String FRET_PATTERN = "(?<=[0-9]=[NS])[0-7](?=[0-9]+)";
 		final String LENGTH_PATTERN = "(?<=[0-9]=[NS][0-7])[0-9]+";
 
@@ -32,9 +35,8 @@ public class Note {
 
 	public static boolean validate(String chartEntry) {
 		// No pun intended
-		final String NOTE_PATTERN = "[0-9]+=[NS][0-7][0-9]+";
+		final String NOTE_PATTERN = "[0-9]+ = [NSE] ([0-7] [0-9]+|soloend|solo)";
 
-		chartEntry = chartEntry.replaceAll("\\s", "");
 		int matchCount = Finder.getMatches(NOTE_PATTERN, chartEntry).size();
 
 		return matchCount == 1;
